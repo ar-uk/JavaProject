@@ -1,7 +1,9 @@
-package com.adil.unisiteproject.controllers;
+package com.adil.unisiteproject.javaproject.controllers;
 
-import com.adil.unisiteproject.models.Submission;
-import com.adil.unisiteproject.services.StudentService;
+import com.adil.unisiteproject.javaproject.models.Submission;
+import com.adil.unisiteproject.javaproject.services.StudentService;
+import com.adil.unisiteproject.javaproject.services.TaskService;
+import com.adil.unisiteproject.javaproject.services.SubmissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 public class StudentController {
 
     @Autowired
-    private TaskService taskService;
+    private TaskService taskService; // Ensure TaskService implementation is annotated with @Service
 
     @Autowired
     private StudentService studentService;

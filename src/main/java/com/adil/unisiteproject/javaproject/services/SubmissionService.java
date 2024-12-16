@@ -1,6 +1,7 @@
 package com.adil.unisiteproject.javaproject.services;
 
 import com.adil.unisiteproject.javaproject.models.Submission;
+import com.adil.unisiteproject.javaproject.models.Task;
 import com.adil.unisiteproject.javaproject.repositories.SubmissionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,23 @@ public class SubmissionService {
     private SubmissionRepository submissionRepository;
 
     public Submission saveSubmission(Submission submission) {
-        // Save a student submission
+        return submissionRepository.save(submission);
+    }
+
+    public Submission createSubmission(Submission submission, Long taskId) {
+        Task task = new Task();
+        task.setId(taskId);
+        submission.setTask(task);
+
+        // Validate the required fields of the submission
+        if (submission.getSubmissionType() == null || submission.getSubmissionType().isEmpty()) {
+            throw new IllegalArgumentException("Submission type cannot be null or empty");
+        }
+        if (submission.getSubmissionData() == null || submission.getSubmissionData().isEmpty()) {
+            throw new IllegalArgumentException("Submission data cannot be null or empty");
+        }
+
+        // Save and return the validated submission
         return submissionRepository.save(submission);
     }
 

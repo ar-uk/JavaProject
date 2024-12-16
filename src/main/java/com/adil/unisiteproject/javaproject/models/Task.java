@@ -112,4 +112,7 @@ public class Task {
     public int hashCode() {
         return 31;
     }
+
+    public void setGroup(Long groupId) {
+    }
 }

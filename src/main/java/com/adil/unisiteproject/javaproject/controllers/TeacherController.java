@@ -1,7 +1,8 @@
-package com.adil.unisiteproject.controllers;
+package com.adil.unisiteproject.javaproject.controllers;
 
-import com.adil.unisiteproject.models.Task;
-import com.adil.unisiteproject.services.TeacherService;
+import com.adil.unisiteproject.javaproject.models.Task;
+import com.adil.unisiteproject.javaproject.services.TeacherService;
+import com.adil.unisiteproject.javaproject.services.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
