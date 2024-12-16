@@ -5,8 +5,9 @@ import com.adil.unisiteproject.javaproject.repositories.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 import org.springframework.security.core.context.SecurityContextHolder;
+
+import java.util.Optional;
 
 @Service
 public class StudentService {
@@ -22,6 +23,13 @@ public class StudentService {
     public Optional<Student> getStudentById(Long id) {
         // Fetch student by ID
         return studentRepository.findById(id);
+    }
+    public Optional<Student> getAuthenticatedStudent() {
+        // Get the currently authenticated user's email from the security context
+        String authenticatedEmail = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        // Use the email to fetch the Student entity
+        return Optional.ofNullable(studentRepository.findByEmail(authenticatedEmail));
     }
 
     public Student getStudentByEmail(String email) {

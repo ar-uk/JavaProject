@@ -5,10 +5,10 @@
 </head>
 <body>
 <h1>Submit Task</h1>
-<form th:action="@{/tasks/{taskId}/submit(taskId=${taskId})}" th:object="${submission}" method="post">
+<form th:action="@{/student/tasks/{taskId}/submit(taskId=${taskId})}" th:object="${submission}" method="post">
     <div>
-        <label for="field">Task Field:</label>
-        <input type="text" id="field" th:field="*{submissionData}" />
+        <label for="githubLink">GitHub URL:</label>
+        <input type="url" id="githubLink" th:field="*{submissionData}" placeholder="Enter GitHub URL" required />
     </div>
     <button type="submit">Submit</button>
 </form>

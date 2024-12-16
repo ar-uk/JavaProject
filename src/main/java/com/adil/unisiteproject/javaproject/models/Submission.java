@@ -2,6 +2,8 @@ package com.adil.unisiteproject.javaproject.models;
 
 import jakarta.persistence.*;
 
+import java.util.Optional;
+
 @Entity
 public class Submission {
 

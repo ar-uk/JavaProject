@@ -19,6 +19,7 @@ public String manageTasks(Model model) {
     model.addAttribute("tasks", taskService.getTasksByTeacherId(teacherId));
     return "manage_tasks";
 }
+
 @GetMapping("/tasks/{taskId}/submissions")
 public String reviewTaskSubmissions(@PathVariable Long taskId, Model model) {
     model.addAttribute("submissions", taskService.getTaskSubmissions(taskId));

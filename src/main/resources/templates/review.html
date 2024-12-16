@@ -1,15 +1,16 @@
-   <!DOCTYPE html>
-   <html xmlns:th="http://www.thymeleaf.org">
-   <head>
-       <title>Review Submissions</title>
-   </head>
-   <body>
-       <h1>Task Submissions</h1>
-       <ul>
-           <li th:each="submission : ${submissions}">
-               <span th:text="${submission.student.name}"></span>:
-               <span th:text="${submission.text}"></span>
-           </li>
-       </ul>
-   </body>
-   </html>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Review Submissions</title>
+</head>
+<body>
+<h1>Task Submissions</h1>
+<ul>
+    <li th:each="submission : ${submissions}">
+        <span th:text="${submission.student.name}"></span>:
+        <span th:text="${submission.submissionData}"></span>
+        (<span th:text="${submission.submissionType}"></span>)
+    </li>
+</ul>
+</body>
+</html>
