@@ -1,6 +1,7 @@
 package com.adil.unisiteproject.javaproject.controllers;
 
 import com.adil.unisiteproject.javaproject.models.Task;
+import com.adil.unisiteproject.javaproject.models.Teacher;
 import com.adil.unisiteproject.javaproject.services.TeacherService;
 import com.adil.unisiteproject.javaproject.services.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,12 +48,19 @@ public String teacherDashboard(Model model) {
 
     @GetMapping("/groups/{groupId}/tasks/create")
     public String createTaskPage(@PathVariable Long groupId, Model model) {
-        model.addAttribute("task", new Task()); // Form Binding
+        model.addAttribute("task", new Task());
+        model.addAttribute("groupId", groupId); // Add groupId to the model
         return "create_task";
     }
 
     @PostMapping("/groups/{groupId}/tasks/create")
     public String createTask(@PathVariable Long groupId, Task task) {
+        // Get the authenticated teacher (using email)
+        String teacherEmail = teacherService.getAuthenticatedTeacherEmail();
+        Teacher teacher = teacherService.getTeacherByEmail(teacherEmail);
+
+        // Set the teacher to the task
+        task.setTeacher(teacher);
         taskService.createTask(task, groupId);
         return "redirect:/teacher/groups/" + groupId + "/tasks";
     }

@@ -25,17 +25,23 @@ public class Student {
     @Column(nullable = false)
     private String password; // Secured
 
+
+    @Column(nullable = false)
+    private String role;
+
+
     // Default Constructor
     public Student() {
     }
 
     // Parameterized Constructor
-    public Student(String email, String name, String surname, Group group, String password) {
+    public Student(String email, String name, String surname, Group group, String password, String role) {
         this.email = email;
         this.name = name;
         this.surname = surname;
         this.group = group;
         this.password = password;
+        this.role = role;
     }
 
     // Getters and Setters
@@ -49,6 +55,14 @@ public class Student {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public void setEmail(String email) {

@@ -1,14 +1,16 @@
-   <!DOCTYPE html>
-   <html xmlns:th="http://www.thymeleaf.org">
-   <head>
-       <title>Submit Task</title>
-   </head>
-   <body>
-       <h1>Submit Task</h1>
-       <form th:action="@{'/student/tasks/' + ${taskId} + '/submit'}" th:object="${submission}" method="post" th:field="*{text}">
-           <label>Submission Text:</label>
-           <textarea th:field="text" required></textarea>
-           <button type="submit">Submit</button>
-       </form>
-   </body>
-   </html>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Submit Task</title>
+</head>
+<body>
+<h1>Submit Task</h1>
+<form th:action="@{/tasks/{taskId}/submit(taskId=${taskId})}" th:object="${submission}" method="post">
+    <div>
+        <label for="field">Task Field:</label>
+        <input type="text" id="field" th:field="*{submissionData}" />
+    </div>
+    <button type="submit">Submit</button>
+</form>
+</body>
+</html>

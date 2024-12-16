@@ -1,5 +1,6 @@
 package com.adil.unisiteproject.javaproject.services;
 
+import com.adil.unisiteproject.javaproject.models.Group;
 import com.adil.unisiteproject.javaproject.models.Task;
 import com.adil.unisiteproject.javaproject.repositories.TaskRepository;
 import com.adil.unisiteproject.javaproject.models.Submission;
@@ -12,6 +13,9 @@ import java.util.Optional;
 
 @Service
 public class TaskService {
+    @Autowired
+    private GroupService groupService;
+
     private void validateTask(Task task) {
         // Validate critical fields
         if (task.getTitle() == null || task.getTitle().isBlank()) {
@@ -23,11 +27,15 @@ public class TaskService {
     }
 
     public Task createTask(Task task, Long groupId) {
-        // Set the group in the task
-        task.setGroup(groupId);
-        // Validate critical fields
+        // Fetch the group and set it in the task
+        Group group = groupService.getGroupById(groupId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid group ID"));
+
+        task.setGroup(group);
+        // Validate the Task
         validateTask(task);
-        // Save and return the task
+
+        // Save the Task
         return taskRepository.save(task);
     }
 

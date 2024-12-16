@@ -23,17 +23,21 @@ public class Teacher {
     @Column(nullable = false)
     private String password; // Secured
 
+    @Column(nullable = false)
+    private String role;
+
     // Default Constructor
     public Teacher() {
     }
 
     // Parameterized Constructor
-    public Teacher(String email, String name, String surname, String profession, String password) {
+    public Teacher(String email, String name, String surname, String profession, String password, String role) {
         this.email = email;
         this.name = name;
         this.surname = surname;
         this.profession = profession;
         this.password = password;
+        this.role = role;
     }
 
     // Getters and Setters
@@ -83,6 +87,14 @@ public class Teacher {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     // toString Method for Debugging
