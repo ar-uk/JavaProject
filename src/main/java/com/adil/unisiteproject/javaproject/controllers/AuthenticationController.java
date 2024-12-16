@@ -23,17 +23,4 @@ public class AuthenticationController {
         return "login";
     }
 
-    @GetMapping("/register")
-    public String registerPage(Model model) {
-        model.addAttribute("student", new Student()); // Form Binding
-        return "register";
-    }
-
-    @PostMapping("/register")
-    public String registerStudent(Student student) {
-        // Encrypt password before saving
-        student.setPassword(passwordEncoder.encode(student.getPassword()));
-        studentService.saveStudent(student);
-        return "redirect:/login"; // Redirect to the login page after successful registration.
-    }
 }

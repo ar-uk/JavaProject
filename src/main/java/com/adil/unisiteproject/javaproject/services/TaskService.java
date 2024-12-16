@@ -2,6 +2,8 @@ package com.adil.unisiteproject.javaproject.services;
 
 import com.adil.unisiteproject.javaproject.models.Task;
 import com.adil.unisiteproject.javaproject.repositories.TaskRepository;
+import com.adil.unisiteproject.javaproject.models.Submission;
+import com.adil.unisiteproject.javaproject.services.SubmissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +35,9 @@ public class TaskService {
     private TaskRepository taskRepository;
 
     @Autowired
+    private SubmissionService submissionService;
+
+    @Autowired
     private StudentService studentService;
 
     public Task saveTask(Task task) {
@@ -55,8 +60,34 @@ public class TaskService {
         taskRepository.deleteById(id);
     }
 
-    public List<Task> getNewTasksForStudent() {
+    public List<Task> getNewTasksForStudent(Long studentId) {
+        // Fetch the group ID for the student
         Long groupId = studentService.getGroupIdByStudentId(studentId);
-        return taskRepository.findByGroupIdAndCreationDateAfter(groupId, sinceDate);
+
+        // Fetch all tasks for the student's group
+        List<Task> groupTasks = taskRepository.findByGroupId(groupId);
+
+        // Filter tasks: Exclude those that the student has already submitted
+        return groupTasks.stream()
+                .filter(task -> !submissionService.isTaskSubmittedByStudent(task.getId(), studentId))
+                .toList();
+    }
+
+    public List<Task> getSubmittedTasksByStudent(Long studentId) {
+        // Get all submission IDs (Task IDs) for the given student
+        List<Long> submittedTaskIds = submissionService.getSubmittedTaskIdsByStudent(studentId);
+
+        // Fetch and return all tasks associated with these task IDs
+        return taskRepository.findByIdIn(submittedTaskIds);
+    }
+
+    public List<Task> getTasksByTeacherId(Long teacherId) {
+        // Fetch and return tasks assigned to the given teacher based on their ID
+        return taskRepository.findByTeacherId(teacherId);
+    }
+
+    public List<Submission> getTaskSubmissions(Long taskId) {
+        // Fetch and return submissions for the given task ID
+        return submissionService.getSubmissionsByTaskId(taskId);
     }
 }

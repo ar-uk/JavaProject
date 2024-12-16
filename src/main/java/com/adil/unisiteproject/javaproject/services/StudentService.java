@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 @Service
 public class StudentService {
@@ -13,9 +14,9 @@ public class StudentService {
     @Autowired
     private StudentRepository studentRepository;
 
-    public Student saveStudent(Student student) {
+    public void saveStudent(Student student) {
         // Save student to the database
-        return studentRepository.save(student);
+        studentRepository.save(student);
     }
 
     public Optional<Student> getStudentById(Long id) {
@@ -31,5 +32,19 @@ public class StudentService {
     public void deleteStudent(Long id) {
         // Delete student record
         studentRepository.deleteById(id);
+    }
+
+    public Long getGroupIdByStudentId(Long studentId) {
+        // Fetch the student using the ID
+        Student student = studentRepository.findById(studentId)
+                .orElseThrow(() -> new IllegalArgumentException("Student not found with ID: " + studentId));
+        // Return the group ID
+        return student.getGroup().getId();
+    }
+    public Long getAuthenticatedStudentId() {
+        // Retrieve the ID of the currently authenticated student
+        String authenticatedEmail = SecurityContextHolder.getContext().getAuthentication().getName();
+        Student authenticatedStudent = studentRepository.findByEmail(authenticatedEmail);
+        return authenticatedStudent.getId();
     }
 }

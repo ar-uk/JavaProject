@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 public class StudentController {
 
     @Autowired
-    private TaskService taskService; // Ensure TaskService implementation is annotated with @Service
+    private TaskService taskService;
 
     @Autowired
     private StudentService studentService;
@@ -22,16 +22,18 @@ public class StudentController {
     @Autowired
     private SubmissionService submissionService;
 
-    @GetMapping("/dashboard")
-    public String studentDashboard(Model model) {
-        // Show new tasks and submitted tasks
-        // Add logic to display lists
-        return "student_dashboard";
-    }
+@GetMapping("/dashboard")
+public String studentDashboard(Model model) {
+    Long studentId = studentService.getAuthenticatedStudentId(); // Dynamically fetch the authenticated student ID
+    model.addAttribute("newTasks", taskService.getNewTasksForStudent(studentId));
+    model.addAttribute("submittedTasks", taskService.getSubmittedTasksByStudent(studentId));
+    return "student";
+}
 
     @GetMapping("/tasks/new")
     public String newTasks(Model model) {
-        model.addAttribute("tasks", taskService.getNewTasksForStudent());
+        Long studentId = studentService.getAuthenticatedStudentId(); // Dynamically fetch the authenticated student ID
+        model.addAttribute("tasks", taskService.getNewTasksForStudent(studentId));
         return "new_tasks";
     }
 

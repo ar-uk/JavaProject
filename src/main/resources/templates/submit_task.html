@@ -5,9 +5,9 @@
    </head>
    <body>
        <h1>Submit Task</h1>
-       <form th:action="@{'/student/tasks/' + ${taskId} + '/submit'}" th:object="${submission}" method="post">
+       <form th:action="@{'/student/tasks/' + ${taskId} + '/submit'}" th:object="${submission}" method="post" th:field="*{text}">
            <label>Submission Text:</label>
-           <textarea th:field="*{text}" required></textarea>
+           <textarea th:field="text" required></textarea>
            <button type="submit">Submit</button>
        </form>
    </body>

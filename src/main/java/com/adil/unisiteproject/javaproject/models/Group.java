@@ -2,6 +2,7 @@ package com.adil.unisiteproject.javaproject.models;
 
 import jakarta.persistence.*;
 import java.util.List;
+import com.adil.unisiteproject.javaproject.models.Teacher;
 
 @Entity
 @Table(name = "groups") // Avoid conflicts with SQL reserved keywords like "group"
@@ -19,6 +20,10 @@ public class Group {
 
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Task> tasks; // Tasks assigned to this group
+
+    @ManyToOne
+    @JoinColumn(name = "teacher_id", nullable = false)
+    private Teacher teacher;
 
     // Default Constructor
     public Group() {
@@ -62,12 +67,22 @@ public class Group {
         this.tasks = tasks;
     }
 
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
+    }
+
+
     // toString method for debugging/logging
     @Override
     public String toString() {
         return "Group{" +
                 "id=" + id +
                 ", groupNumber='" + groupNumber + '\'' +
+                ", teacher=" + teacher +
                 '}';
     }
 

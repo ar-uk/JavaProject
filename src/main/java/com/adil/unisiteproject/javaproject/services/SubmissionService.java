@@ -55,4 +55,17 @@ public class SubmissionService {
         // Delete a submission
         submissionRepository.deleteById(id);
     }
+
+    public boolean isTaskSubmittedByStudent(Long taskId, Long studentId) {
+        return submissionRepository.existsByTaskIdAndStudentId(taskId, studentId);
+    }
+
+
+    public List<Long> getSubmittedTaskIdsByStudent(Long studentId) {
+        List<Submission> submissions = submissionRepository.findByStudentId(studentId);
+        return submissions.stream()
+                .map(submission -> submission.getTask().getId())
+                .distinct()
+                .toList();
+    }
 }

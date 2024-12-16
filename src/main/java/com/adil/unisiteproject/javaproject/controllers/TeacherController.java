@@ -11,6 +11,18 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/teacher")
 public class TeacherController {
+@GetMapping("/tasks/manage")
+public String manageTasks(Model model) {
+    String teacherEmail = teacherService.getAuthenticatedTeacherEmail();
+    Long teacherId = teacherService.getTeacherByEmail(teacherEmail).getId();
+    model.addAttribute("tasks", taskService.getTasksByTeacherId(teacherId));
+    return "manage_tasks";
+}
+@GetMapping("/tasks/{taskId}/submissions")
+public String reviewTaskSubmissions(@PathVariable Long taskId, Model model) {
+    model.addAttribute("submissions", taskService.getTaskSubmissions(taskId));
+    return "review";
+}
 
     @Autowired
     private TaskService taskService;
@@ -18,12 +30,14 @@ public class TeacherController {
     @Autowired
     private TeacherService teacherService;
 
-    @GetMapping("/dashboard")
-    public String teacherDashboard(Model model) {
-        // Fetch all groups/related tasks for the teacher.
-        // Add logic to display lists...
-        return "teacher_dashboard"; // Render teacher dashboard Thymeleaf template
-    }
+@GetMapping("/dashboard")
+public String teacherDashboard(Model model) {
+    String teacherEmail = teacherService.getAuthenticatedTeacherEmail();
+    Long teacherId = teacherService.getTeacherByEmail(teacherEmail).getId();
+    model.addAttribute("groups", teacherService.getGroupsByTeacherId(teacherId));
+    model.addAttribute("tasks", taskService.getTasksByTeacherId(teacherId));
+    return "teacher_dashboard";
+}
 
     @GetMapping("/groups/{groupId}/tasks")
     public String groupTasks(@PathVariable Long groupId, Model model) {

@@ -110,7 +110,7 @@ public class Task {
 
     @Override
     public int hashCode() {
-        return 31;
+        return 0;
     }
 
     public void setGroup(Long groupId) {
