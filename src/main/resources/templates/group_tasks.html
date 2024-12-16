@@ -1,0 +1,15 @@
+   <!DOCTYPE html>
+   <html xmlns:th="http://www.thymeleaf.org">
+   <head>
+       <title>Group Tasks</title>
+   </head>
+   <body>
+       <h1>Group Tasks</h1>
+       <ul>
+           <li th:each="task : ${tasks}">
+               <span th:text="${task.title}"></span>
+               <a th:href="@{'/teacher/groups/' + ${groupId} + '/tasks/create'}">Create New Task</a>
+           </li>
+       </ul>
+   </body>
+   </html>

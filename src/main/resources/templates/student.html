@@ -1,0 +1,22 @@
+   <!DOCTYPE html>
+   <html xmlns:th="http://www.thymeleaf.org">
+   <head>
+       <title>Student Dashboard</title>
+   </head>
+   <body>
+       <h1>Welcome to your Dashboard</h1>
+       <h2>New Tasks</h2>
+       <ul>
+           <li th:each="task : ${newTasks}">
+               <span th:text="${task.title}"></span>
+               <a th:href="@{'/student/tasks/' + ${task.id} + '/submit'}">Submit</a>
+           </li>
+       </ul>
+       <h2>Submitted Tasks</h2>
+       <ul>
+           <li th:each="task : ${submittedTasks}">
+               <span th:text="${task.title}"></span>
+           </li>
+       </ul>
+   </body>
+   </html>

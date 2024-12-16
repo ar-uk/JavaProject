@@ -1,0 +1,15 @@
+   <!DOCTYPE html>
+   <html xmlns:th="http://www.thymeleaf.org">
+   <head>
+       <title>Manage Tasks</title>
+   </head>
+   <body>
+       <h1>Manage Tasks</h1>
+       <ul>
+           <li th:each="task : ${tasks}">
+               <span th:text="${task.title}"></span>
+               <a th:href="@{'/teacher/tasks/' + ${task.id} + '/submissions'}">Review Submissions</a>
+           </li>
+       </ul>
+   </body>
+   </html>

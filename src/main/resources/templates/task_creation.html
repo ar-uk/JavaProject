@@ -1,0 +1,16 @@
+   <!DOCTYPE html>
+   <html xmlns:th="http://www.thymeleaf.org">
+   <head>
+       <title>Create Task</title>
+   </head>
+   <body>
+       <h1>Create Task</h1>
+       <form th:action="@{'/teacher/groups/' + ${groupId} + '/tasks/create'}" th:object="${task}" method="post">
+           <label>Title:</label>
+           <input type="text" th:field="*{title}" required>
+           <label>Description:</label>
+           <textarea th:field="*{description}" required></textarea>
+           <button type="submit">Create</button>
+       </form>
+   </body>
+   </html>
