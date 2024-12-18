@@ -16,24 +16,19 @@ public class StudentService {
     private StudentRepository studentRepository;
 
     public void saveStudent(Student student) {
-        // Save student to the database
         studentRepository.save(student);
     }
 
     public Optional<Student> getStudentById(Long id) {
-        // Fetch student by ID
         return studentRepository.findById(id);
     }
     public Optional<Student> getAuthenticatedStudent() {
-        // Get the currently authenticated user's email from the security context
         String authenticatedEmail = SecurityContextHolder.getContext().getAuthentication().getName();
 
-        // Use the email to fetch the Student entity
         return Optional.ofNullable(studentRepository.findByEmail(authenticatedEmail));
     }
 
     public Student getStudentByEmail(String email) {
-        // Fetch student by email
         return studentRepository.findByEmail(email);
     }
 

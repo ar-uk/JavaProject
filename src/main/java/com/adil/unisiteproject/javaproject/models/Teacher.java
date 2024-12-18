@@ -1,7 +1,9 @@
 package com.adil.unisiteproject.javaproject.models;
 
 import jakarta.persistence.*;
+import lombok.*;
 
+@Data
 @Entity
 public class Teacher {
 
@@ -21,16 +23,14 @@ public class Teacher {
     private String profession;
 
     @Column(nullable = false)
-    private String password; // Secured
+    private String password;
 
     @Column(nullable = false)
     private String role;
 
-    // Default Constructor
     public Teacher() {
     }
 
-    // Parameterized Constructor
     public Teacher(String email, String name, String surname, String profession, String password, String role) {
         this.email = email;
         this.name = name;
@@ -40,64 +40,6 @@ public class Teacher {
         this.role = role;
     }
 
-    // Getters and Setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public String getProfession() {
-        return profession;
-    }
-
-    public void setProfession(String profession) {
-        this.profession = profession;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    // toString Method for Debugging
     @Override
     public String toString() {
         return "Teacher{" +
@@ -109,7 +51,6 @@ public class Teacher {
                 '}';
     }
 
-    // equals and hashCode Methods
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

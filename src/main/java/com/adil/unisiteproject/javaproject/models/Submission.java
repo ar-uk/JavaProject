@@ -3,7 +3,9 @@ package com.adil.unisiteproject.javaproject.models;
 import jakarta.persistence.*;
 
 import java.util.Optional;
+import lombok.*;
 
+@Data
 @Entity
 public class Submission {
 
@@ -12,24 +14,24 @@ public class Submission {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "task_id") // Foreign key to Task
+    @JoinColumn(name = "task_id")
     private Task task;
 
     @ManyToOne
-    @JoinColumn(name = "student_id") // Foreign key to Student
+    @JoinColumn(name = "student_id")
     private Student student;
 
     @Column(nullable = false)
-    private String submissionType; // "file" or "github"
+    private String submissionType;
 
     @Column(nullable = false)
-    private String submissionData; // File path or GitHub URL
+    private String submissionData;
 
-    // Default Constructor
+
     public Submission() {
     }
 
-    // Parameterized Constructor
+
     public Submission(Task task, Student student, String submissionType, String submissionData) {
         this.task = task;
         this.student = student;
@@ -37,48 +39,6 @@ public class Submission {
         this.submissionData = submissionData;
     }
 
-    // Getters and Setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Task getTask() {
-        return task;
-    }
-
-    public void setTask(Task task) {
-        this.task = task;
-    }
-
-    public Student getStudent() {
-        return student;
-    }
-
-    public void setStudent(Student student) {
-        this.student = student;
-    }
-
-    public String getSubmissionType() {
-        return submissionType;
-    }
-
-    public void setSubmissionType(String submissionType) {
-        this.submissionType = submissionType;
-    }
-
-    public String getSubmissionData() {
-        return submissionData;
-    }
-
-    public void setSubmissionData(String submissionData) {
-        this.submissionData = submissionData;
-    }
-
-    // toString Method for Debugging
     @Override
     public String toString() {
         return "Submission{" +
@@ -90,7 +50,6 @@ public class Submission {
                 '}';
     }
 
-    // equals and hashCode Methods
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

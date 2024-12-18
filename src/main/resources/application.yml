@@ -10,3 +10,6 @@ spring:
   security:
     user:
       roles: STUDENT
+
+  mvc:
+    static-path-pattern: /**

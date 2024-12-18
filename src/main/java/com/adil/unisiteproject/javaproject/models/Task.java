@@ -1,7 +1,10 @@
 package com.adil.unisiteproject.javaproject.models;
 
 import jakarta.persistence.*;
+import java.util.List;
+import lombok.*;
 
+@Data
 @Entity
 public class Task {
 
@@ -14,21 +17,19 @@ public class Task {
 
     private String description;
 
-    private String attachmentUrl; // Optional field for file URLs or attachments
+    private String attachmentUrl;
 
     @ManyToOne
-    @JoinColumn(name = "teacher_id", nullable = false) // Foreign key to Teacher
+    @JoinColumn(name = "teacher_id", nullable = false)
     private Teacher teacher;
 
     @ManyToOne
-    @JoinColumn(name = "group_id", nullable = false) // Foreign key to Group
+    @JoinColumn(name = "group_id", nullable = false)
     private Group group;
 
-    // Default Constructor
     public Task() {
     }
 
-    // Parameterized Constructor
     public Task(String title, String description, String attachmentUrl, Teacher teacher, Group group) {
         this.title = title;
         this.description = description;
@@ -37,7 +38,6 @@ public class Task {
         this.group = group;
     }
 
-    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -86,7 +86,6 @@ public class Task {
         this.group = group;
     }
 
-    // toString Method for Debugging
     @Override
     public String toString() {
         return "Task{" +
@@ -99,7 +98,6 @@ public class Task {
                 '}';
     }
 
-    // equals and hashCode Methods
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -108,6 +106,9 @@ public class Task {
         return id != null && id.equals(task.id);
     }
 
+    @OneToMany(mappedBy = "task", cascade = CascadeType.REMOVE) // Cascade delete to submissions
+    private List<Submission> submissions;
+    
     @Override
     public int hashCode() {
         return 0;

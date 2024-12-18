@@ -15,22 +15,18 @@ public class GroupService {
     private GroupRepository groupRepository;
 
     public Group saveGroup(Group group) {
-        // Save a new group to the database
         return groupRepository.save(group);
     }
 
     public Optional<Group> getGroupById(Long id) {
-        // Get group by ID
         return groupRepository.findById(id);
     }
 
     public List<Group> getAllGroups() {
-        // Get a list of all groups
         return groupRepository.findAll();
     }
 
     public void deleteGroup(Long id) {
-        // Delete a group
         groupRepository.deleteById(id);
     }
 }

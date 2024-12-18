@@ -1,7 +1,9 @@
 package com.adil.unisiteproject.javaproject.models;
 
 import jakarta.persistence.*;
+import lombok.*;
 
+@Data
 @Entity
 public class Student {
 
@@ -19,22 +21,20 @@ public class Student {
     private String surname;
 
     @ManyToOne
-    @JoinColumn(name = "group_id") // Foreign key to Group
+    @JoinColumn(name = "group_id")
     private Group group;
 
     @Column(nullable = false)
-    private String password; // Secured
+    private String password;
 
 
     @Column(nullable = false)
     private String role;
 
 
-    // Default Constructor
     public Student() {
     }
 
-    // Parameterized Constructor
     public Student(String email, String name, String surname, Group group, String password, String role) {
         this.email = email;
         this.name = name;
@@ -44,64 +44,6 @@ public class Student {
         this.role = role;
     }
 
-    // Getters and Setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public Group getGroup() {
-        return group;
-    }
-
-    public void setGroup(Group group) {
-        this.group = group;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    // toString Method for Debugging
     @Override
     public String toString() {
         return "Student{" +
@@ -113,7 +55,6 @@ public class Student {
                 '}';
     }
 
-    // equals and hashCode Methods
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

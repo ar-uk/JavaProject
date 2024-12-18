@@ -26,14 +26,12 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        // Check if user is a teacher
         Teacher teacher = teacherRepository.findByEmail(email);
         if (teacher != null) {
             GrantedAuthority authority = new SimpleGrantedAuthority(teacher.getRole());
             return new User(teacher.getEmail(), teacher.getPassword(), Collections.singletonList(authority));
         }
 
-        // Check if user is a student
         Student student = studentRepository.findByEmail(email);
         if (student != null) {
             GrantedAuthority authority = new SimpleGrantedAuthority(student.getRole());

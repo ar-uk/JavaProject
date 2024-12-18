@@ -50,14 +50,11 @@ public String studentDashboard(Model model) {
     public String submitTask(@PathVariable Long taskId, Submission submission) {
         submission.setSubmissionType("github");
 
-        // Retrieve the authenticated Student object directly
         Student authenticatedStudent = studentService.getAuthenticatedStudent()
                 .orElseThrow(() -> new IllegalStateException("No authenticated student found."));
 
-        // Assign the Student instance to the Submission
         submission.setStudent(authenticatedStudent);
 
-        // Create the submission
         submissionService.createSubmission(submission, taskId);
 
         return "redirect:/student/dashboard";
