@@ -1,18 +1,30 @@
-   <!DOCTYPE html>
-   <html xmlns:th="http://www.thymeleaf.org">
-   <head>
-       <title>Group Tasks</title>
-       <link rel="stylesheet" th:href="@{/css/styles.css}">
-   </head>
-   <body>
-       <h1>Group Tasks</h1><a th:href="@{'/teacher/groups/' + ${groupId} + '/tasks/create'}">Create New Task</a>
-       <ul>
-           <li th:each="task : ${tasks}">
-               <span th:text="${task.title}"></span>
-               <form th:action="@{'/teacher/tasks/' + ${task.id} + '/delete'}" method="post" style="display: inline;">
-                   <button type="submit">Delete</button>
-               </form>
-           </li>
-       </ul>
-   </body>
-   </html>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Group Tasks</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<h1>Group Tasks</h1>
+<a th:href="@{'/teacher/groups/' + ${groupId} + '/tasks/create'}">Create New Task</a>
+<ul>
+    <li th:each="task : ${tasks}">
+        <span th:text="${task.title}"></span>
+        <form th:action="@{'/teacher/tasks/' + ${task.id} + '/delete'}" method="post" style="display: inline;">
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>
+
+<!-- Pagination Controls -->
+<div>
+        <span th:if="${currentPage > 0}">
+            <a th:href="@{'/teacher/groups/' + ${groupId} + '/tasks?page=' + (${currentPage} - 1) + '&size=3'}">Previous</a>
+        </span>
+    <span>Page <span th:text="${currentPage + 1}"></span> of <span th:text="${totalPages}"></span></span>
+    <span th:if="${currentPage + 1 < totalPages}">
+            <a th:href="@{'/teacher/groups/' + ${groupId} + '/tasks?page=' + (${currentPage} + 1) + '&size=3'}">Next</a>
+        </span>
+</div>
+</body>
+</html>
