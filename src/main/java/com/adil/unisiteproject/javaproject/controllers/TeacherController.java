@@ -5,6 +5,8 @@ import com.adil.unisiteproject.javaproject.models.Teacher;
 import com.adil.unisiteproject.javaproject.services.TeacherService;
 import com.adil.unisiteproject.javaproject.services.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -42,8 +44,12 @@ public String teacherDashboard(Model model) {
 }
 
     @GetMapping("/groups/{groupId}/tasks")
-    public String groupTasks(@PathVariable Long groupId, Model model) {
-        model.addAttribute("tasks", taskService.getTasksByGroupId(groupId));
+    public String groupTasks(@PathVariable Long groupId, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "3") int size, Model model) {
+        Page<Task> taskPage = taskService.findByGroupId(groupId, PageRequest.of(page, size));
+        model.addAttribute("tasks", taskPage.getContent());
+        model.addAttribute("currentPage", taskPage.getNumber());
+        model.addAttribute("totalPages", taskPage.getTotalPages());
+        model.addAttribute("groupId", groupId);
         return "group_tasks";
     }
 

@@ -6,6 +6,8 @@ import com.adil.unisiteproject.javaproject.repositories.TaskRepository;
 import com.adil.unisiteproject.javaproject.models.Submission;
 import com.adil.unisiteproject.javaproject.services.SubmissionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -54,8 +56,8 @@ public class TaskService {
         return taskRepository.findById(id);
     }
 
-    public List<Task> getTasksByGroupId(Long groupId) {
-        return taskRepository.findByGroupId(groupId);
+    public Page<Task> findByGroupId(Long groupId, Pageable pageable) {
+        return taskRepository.findByGroupId(groupId, pageable);
     }
 
     public void deleteTask(Long id) {
@@ -64,13 +66,12 @@ public class TaskService {
 
     public List<Task> getNewTasksForStudent(Long studentId) {
         Long groupId = studentService.getGroupIdByStudentId(studentId);
-
-        List<Task> groupTasks = taskRepository.findByGroupId(groupId);
-
+        List<Task> groupTasks = taskRepository.findByGroupId(groupId, Pageable.unpaged()).getContent();
         return groupTasks.stream()
                 .filter(task -> !submissionService.isTaskSubmittedByStudent(task.getId(), studentId))
                 .toList();
     }
+
 
     public List<Task> getSubmittedTasksByStudent(Long studentId) {
         List<Long> submittedTaskIds = submissionService.getSubmittedTaskIdsByStudent(studentId);
